@@ -36,10 +36,12 @@ class SqliteMarkdownRenderer(mistune.Renderer):
                     for v in row:
                         if v is None:
                             v = ''
-                        if type(v) == str and (v.startswith("https://") or v.startswith("http://")):
+                        if type(v) == str and (v.startswith("https://") or v.startswith("http://") or v.startswith("ftp://")):
                             ret += '  <td><a href="{}">{}</a></td>\n'.format(v, v)
                         elif type(v) == str and v.startswith("10."):
                             ret += '  <td><a href="https://doi.org/{}">{}</a></td>\n'.format(v, v)
+                        elif type(v) == str and v.startswith("PMC") and v[3:].isdigit():
+                            ret += '  <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/{}">{}</a></td>\n'.format(v, v)
                         else:
                             ret += '  <td>{}</td>\n'.format(v)
                     ret += "</tr>\n"
