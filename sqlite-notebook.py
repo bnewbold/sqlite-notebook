@@ -12,7 +12,7 @@ class SqliteMarkdownRenderer(mistune.Renderer):
         self.conn = conn
 
     def block_code(self, code, lang):
-        if lang.strip().lower() == 'sql':
+        if lang and lang.strip().lower() == 'sql':
             # remove comment lines
             core = code.strip()
             code = '\n'.join(
